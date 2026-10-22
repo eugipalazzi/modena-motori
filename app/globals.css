@@ -1,26 +1,194 @@
-@import "tailwindcss";
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --yellow: #ffd500;
+  --ink: #000;
+  --bg: #fff;
+  --text: #1a1a1a;
+  --muted: #555;
+  --panel: #f4f4f2;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg: #111;
+    --text: #f2f2f2;
+    --muted: #aaa;
+    --panel: #1c1c1c;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 56px;
 }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-teko), "Arial Narrow", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 1.3;
+}
+
+section {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+/* Header */
+.header {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 20;
+  background: var(--ink);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 5vw;
+}
+.logo {
+  font-weight: 600;
+  font-size: 2rem;
+  color: #fff;
+  text-decoration: none;
+}
+.logo span { color: var(--yellow); }
+.header nav {
+  display: flex;
+  gap: clamp(14px, 3vw, 32px);
+}
+.header nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.3rem;
+  letter-spacing: 0.05em;
+  padding-bottom: 3px;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+.header nav a:hover,
+.header nav a.active { border-color: var(--yellow); }
+.header nav a:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+/* Hero */
+.hero {
+  background: var(--yellow);
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8vh 5vw;
+}
+.hero h1 {
+  margin: 0;
+  font-weight: 600;
+  font-size: clamp(3.2rem, 12vw, 10rem);
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+.hero p {
+  margin: 28px 0 0;
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  max-width: 34em;
+}
+
+/* Chi siamo */
+.stats {
+  padding: 12vh 5vw;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.stats p {
+  max-width: 36em;
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  line-height: 1.35;
+  margin: 0 0 1.2em;
+}
+.stats h2 {
+  font-weight: 600;
+  font-size: clamp(1.9rem, 3.6vw, 2.8rem);
+  margin: 2em 0 0.8em;
+}
+
+.socials {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.socials li {
+  position: relative;
+  background: var(--panel);
+  border-left: 6px solid var(--yellow);
+  padding: 20px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: background 0.2s, color 0.2s, transform 0.2s, border-color 0.2s;
+}
+.socials svg { width: 34px; height: 34px; flex: none; fill: currentColor; }
+.socials b {
+  display: block;
+  font-weight: 600;
+  font-size: 2.8rem;
+  line-height: 1;
+}
+.socials span { color: var(--muted); font-size: 1.3rem; }
+.socials li a { position: absolute; inset: 0; z-index: 1; }
+.socials li a:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+.socials li:hover,
+.socials li:focus-within {
+  background: var(--yellow);
+  color: #000;
+  transform: translateY(-4px);
+  border-color: #000;
+}
+.socials li:hover span,
+.socials li:focus-within span { color: #000; }
+
+/* Contatti */
+#contatti {
+  background: var(--ink);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+.c-inner {
+  max-width: 1100px;
+  width: 100%;
+  margin: auto;
+  padding: 10vh 5vw;
+}
+#contatti h2 {
+  color: var(--yellow);
+  font-weight: 600;
+  font-size: clamp(3rem, 7vw, 5rem);
+  margin: 0 0 0.5em;
+}
+#contatti p { margin: 0.3em 0; font-size: 1.6rem; }
+#contatti a { color: var(--yellow); text-decoration: none; }
+#contatti a:hover { text-decoration: underline; }
+
+.legal {
+  background: #000;
+  color: #999;
+  text-align: center;
+  padding: 18px 5vw;
+  font-size: 1rem;
+  border-top: 1px solid #333;
+}
+.legal p { margin: 0.2em 0; font-size: 1rem; }
